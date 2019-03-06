@@ -1,0 +1,19 @@
+<idea-plugin>
+  <version>1.0-SNAPSHOT</version>
+  <change-notes>
+      Add change notes here.&lt;br&gt;
+      &lt;em&gt;most HTML tags may be used&lt;/em&gt;</change-notes>
+  <idea-version since-build="191.5109" until-build="191.*"/>
+  <id>com.jlandrum.kapibara.kapibara</id>
+  <name>Kapibara</name>
+  <vendor email="me@jameslandrum.com" url="http://www.jameslandrum.com">James Landrum</vendor>
+  <description>
+    &lt;b&gt;KAPIbara&lt;/b&gt;
+    A (K)otlin Open(API) plugin for previewing and executing OpenAPI specifications. (bara).
+    </description>
+  <depends>com.intellij.modules.lang</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <toolWindow id="KAPIbara" icon="/capy.png" factoryClass="KapiToolWindowFactory" anchor="right"/>
+  </extensions>
+  <actions/>
+</idea-plugin>

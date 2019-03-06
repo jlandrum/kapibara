@@ -1,0 +1,20 @@
+<idea-plugin>
+    <id>com.jlandrum.kapibara.kapibara</id>
+    <name>Kapibara</name>
+    <vendor email="me@jameslandrum.com" url="http://www.jameslandrum.com">James Landrum</vendor>
+
+    <description><![CDATA[
+    <b>KAPIbara</b>
+    A (K)otlin Open(API) plugin for previewing and executing OpenAPI specifications. (bara).
+    ]]></description>
+
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="KAPIbara" icon="/capy.png" factoryClass="KapiToolWindowFactory" anchor="right"/>
+    </extensions>
+
+    <actions>
+    </actions>
+</idea-plugin>
+
