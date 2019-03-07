@@ -12,9 +12,14 @@ import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.psi.PsiFile
 import com.intellij.util.ui.UIUtil
+import io.github.rybalkinsd.kohttp.dsl.*
+import io.github.rybalkinsd.kohttp.ext.EagerResponse
+import io.github.rybalkinsd.kohttp.ext.eager
+import io.github.rybalkinsd.kohttp.ext.httpGet
 import io.swagger.models.Swagger
 import io.swagger.parser.Swagger20Parser
 import io.swagger.v3.oas.models.OpenAPI
+import io.swagger.v3.oas.models.Operation
 import io.swagger.v3.parser.OpenAPIV3Parser
 import javafx.application.Platform
 import javafx.beans.value.ChangeListener
@@ -24,6 +29,7 @@ import javafx.embed.swing.JFXPanel
 import javafx.scene.Scene
 import javafx.scene.web.WebView
 import netscape.javascript.JSObject
+import okhttp3.Response
 import java.awt.GridLayout
 import java.io.InputStream
 import java.net.URL
@@ -44,6 +50,7 @@ class KapiToolWindowFactory : ToolWindowFactory, TypedHandlerDelegate() {
     private class KapiToolWindowView() : JPanel(), DocumentListener, FileEditorManagerListener,
         ChangeListener<Worker.State> {
 
+        private var activeDocument: Any? = null
         private var webview : WebView? = null
         private val fdm = FileDocumentManager.getInstance()
         private val openApi = OpenAPIV3Parser()
@@ -64,7 +71,6 @@ class KapiToolWindowFactory : ToolWindowFactory, TypedHandlerDelegate() {
                 it.isJavaScriptEnabled = true
                 it.loadWorker.stateProperty().addListener(this@KapiToolWindowView)
                 it.load("/interface.vue.html".asResource().toExternalForm())
-                it.isJavaScriptEnabled = true
             }
             panel.scene = Scene(webview)
         }.also {
@@ -80,7 +86,11 @@ class KapiToolWindowFactory : ToolWindowFactory, TypedHandlerDelegate() {
         override fun changed(observable: ObservableValue<out Worker.State>?, oldValue: Worker.State?, newValue: Worker.State?) {
             if (newValue == Worker.State.SUCCEEDED) {
                 updateTheme()
-                (webview?.engine?.executeScript("window") as JSObject).call("ready")
+                webview?.engine?.isJavaScriptEnabled = true
+                (webview?.engine?.executeScript("window") as JSObject).also {
+                    it.call("ready")
+                    it.setMember("JB", JavaBridge)
+                }
             }
         }
 
@@ -91,31 +101,54 @@ class KapiToolWindowFactory : ToolWindowFactory, TypedHandlerDelegate() {
         private fun updateActiveDocument(document: Document) = Platform.runLater {
             val mapper = ObjectMapper()
             fdm.getFile(document)?.let {
-                val api : OpenAPI? = openApi.read(it.path)
-                val swagger: Swagger? = swagger.read(it.path, emptyList())
-                val json = try { mapper.writeValueAsString(api ?: swagger) } catch (e:Exception) { "{}" } ?: "{}"
+                val oap : OpenAPI? = openApi.read(it.path)
+                val swg: Swagger? = swagger.read(it.path, emptyList())
+                activeDocument = oap ?: swg
+                val json = try { mapper.writeValueAsString(activeDocument) } catch (e:Exception) { "{}" } ?: "{}"
                 webview?.engine?.executeScript("updateContent($json)")
-                if (api != null) {
-//                    webview?.engine?.loadContent("""
-//                        <html>
-//                            <center>
-//                                <b>${it.name} OpenAPI: ${api.api}</b><br/>
-//                                Title: ${api.info.title}<br/>
-//                                Description: ${api.info.description}<br/>
-//                                Version: ${api.info.version}
-//                            </center>
-//                        </html>
-//                    """.trimIndent())
-                } else {
-//                    webview?.engine?.loadContent("""
-//                        <html>
-//                            <center>
-//                                <b>This is not a valid OpenAPI document.</b>
-//                            </center>
-//                        </html>
-//                    """.trimIndent())
-                }
             }
+        }
+
+        object JavaBridge {
+            fun log(obj: Any) {
+                println(obj)
+            }
+            public fun executeApiCall(host: String, path: String, method: String) : HttpResponse {
+                val url = URL(host+path)
+                return HttpResponse(when (method.toLowerCase()) {
+                    "get" -> httpGet {
+                        this.host = url.host
+                        this.path = url.path
+                    }
+                    "put" -> httpPut {
+                        this.host = url.host
+                        this.path = url.path
+                    }
+                    "post" -> httpPost {
+                        this.host = url.host
+                        this.path = url.path
+                    }
+                    "delete" -> httpDelete {
+                        this.host = url.host
+                        this.path = url.path
+                    }
+                    "head" -> httpHead {
+                        this.host = url.host
+                        this.path = url.path
+                    }
+                    "patch" -> httpPatch {
+                        this.host = url.host
+                        this.path = url.path
+                    }
+                    else -> null
+                }?.eager())
+            }
+        }
+
+        class HttpResponse(response: EagerResponse?) {
+            val body = response?.body ?:""
+            val code = response?.code ?: 0
+            val message = response?.message ?: ""
         }
     }
 }

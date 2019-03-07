@@ -5,7 +5,9 @@ function init() {
             api: null,
             selectedUrl: null,
             selectedHost: null,
-            expandedAreas: {}
+            expandedAreas: {},
+            responses: {},
+            log: ""
         },
         methods: {
             httpMethods(methods) {
@@ -16,6 +18,19 @@ function init() {
             },
             toggleView(name) {
                 Vue.set(vm.expandedAreas, name, !(vm.expandedAreas[name]||false))
+            },
+            toggleActivated(event) {
+                let element = event.target;
+                element.classList.toggle("active")
+            },
+            executeApi(id, path, method) {
+                if (typeof JB !== "undefined") {
+                    var data = JB.executeApiCall(vm.selectedUrl,path,method);
+                    vm.log = JSON.parse(data);
+                    Vue.set(vm.responses, id, {"code": data.code||0, "message": data.message||"", "body": data.body||""});
+                } else {
+                    Vue.set(vm.responses, id, {"code": 3, "message": "test", "body": "Hello"});
+                }
             }
         }
     });

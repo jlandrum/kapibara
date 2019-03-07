@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation "io.github.rybalkinsd:kohttp:0.7.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation ('io.swagger.parser.v3:swagger-parser:2.0.9') {
         exclude group: "org.slf4j", module: "slf4j-api"
