@@ -13,8 +13,6 @@
                 <p>This is not a valid OpenAPI document.</p>
             </section>
             <section id="available" v-if="api">
-                {{responses}}::
-                {{log}}
                 <header>
                     <h1>{{api.info.title}} <span class="version">{{api.info.version}}</span></h1>
                     <label v-if="api.servers">Servers:

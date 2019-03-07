@@ -145,10 +145,10 @@ class KapiToolWindowFactory : ToolWindowFactory, TypedHandlerDelegate() {
             }
         }
 
-        class HttpResponse(response: EagerResponse?) {
-            val body = response?.body ?:""
-            val code = response?.code ?: 0
-            val message = response?.message ?: ""
+        data class HttpResponse(private val response: EagerResponse?) {
+            fun body() = response?.body ?:""
+            fun code() = response?.code ?: 0
+            fun message() = response?.message ?: ""
         }
     }
 }

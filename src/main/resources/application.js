@@ -26,8 +26,7 @@ function init() {
             executeApi(id, path, method) {
                 if (typeof JB !== "undefined") {
                     var data = JB.executeApiCall(vm.selectedUrl,path,method);
-                    vm.log = JSON.parse(data);
-                    Vue.set(vm.responses, id, {"code": data.code||0, "message": data.message||"", "body": data.body||""});
+                    Vue.set(vm.responses, id, {"code": data.code()||0, "message": data.message()||"", "body": data.body()||""});
                 } else {
                     Vue.set(vm.responses, id, {"code": 3, "message": "test", "body": "Hello"});
                 }
