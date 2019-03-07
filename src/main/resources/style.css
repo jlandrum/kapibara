@@ -1,0 +1,142 @@
+body, html {
+  overflow: hidden;
+}
+
+body {
+  font-family: sans-serif;
+  font-size: 12px;
+}
+body.dark {
+  color: #CCCCCC;
+  background: #333333;
+}
+body.dark header {
+  background: #333333;
+}
+body.light {
+  color: #333333;
+  background: #F6F6F6;
+}
+body.light header {
+  background: #FDFDFD;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+body #available > header {
+  position: sticky;
+  top: 0;
+  padding: 8px;
+}
+body #available > header h1 .version {
+  border-radius: 12px;
+  font-size: 9px;
+  color: #CCCCCC;
+  padding: 2px 8px;
+  background: #333333;
+  vertical-align: 40%;
+}
+body article {
+  margin: 16px;
+}
+body #app > section {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  overflow: auto;
+}
+body .path .route {
+  margin: 8px 0;
+  padding: 8px;
+}
+body .path .route.method_post {
+  background-color: #b9efb8;
+  box-shadow: 0 0 4px #90e68e;
+  border: 1px solid #30c92c;
+  border-radius: 3px;
+  font-size: 12px;
+}
+body .path .route.method_post .method {
+  background: #30c92c;
+  padding: 4px 8px;
+  border-radius: 3px;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+body .path .route.method_post header {
+  display: flex;
+}
+body .path .route.method_get {
+  background-color: #ceeef9;
+  box-shadow: 0 0 4px #a1ddf4;
+  border: 1px solid #2fb5e6;
+  border-radius: 3px;
+  font-size: 12px;
+}
+body .path .route.method_get .method {
+  background: #2fb5e6;
+  padding: 4px 8px;
+  border-radius: 3px;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+body .path .route.method_get header {
+  display: flex;
+}
+body .path .route.method_put {
+  background-color: #fcf3ea;
+  box-shadow: 0 0 4px #f6d8be;
+  border: 1px solid #e6954e;
+  border-radius: 3px;
+  font-size: 12px;
+}
+body .path .route.method_put .method {
+  background: #e6954e;
+  padding: 4px 8px;
+  border-radius: 3px;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+body .path .route.method_put header {
+  display: flex;
+}
+body .path .route.method_delete {
+  background-color: #fbe4e3;
+  box-shadow: 0 0 4px #f5b8b6;
+  border: 1px solid #e64946;
+  border-radius: 3px;
+  font-size: 12px;
+}
+body .path .route.method_delete .method {
+  background: #e64946;
+  padding: 4px 8px;
+  border-radius: 3px;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+body .path .route.method_delete header {
+  display: flex;
+}
+body .path .route .path {
+  word-break: break-word;
+}
+body .path .route h1 {
+  display: flex;
+  align-items: flex-start;
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+}
+body .path .route .editor.hidden {
+  display: none;
+}
+
+/*# sourceMappingURL=style.css.map */

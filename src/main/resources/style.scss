@@ -1,0 +1,115 @@
+$color-white: #FFFFFF;
+$color-black: #000000;
+$color-green: #30c92c;
+$color-blue: #2fb5e6;
+$color-orange: #e6954e;
+$color-red: #e64946;
+$color-silver: #e6e6e6;
+$color-grey: #CCCCCC;
+$color-metal: #333333;
+
+$method-colors: (
+        post: $color-green,
+        get: $color-blue,
+        put: $color-orange,
+        delete: $color-red,
+        default: $color-silver
+);
+
+@mixin method($name: null) {
+    $color: map_get($method-colors,if($name,$name,"default"));
+    background-color: lighten($color,35%);
+    box-shadow: 0 0 4px opacify(lighten($color,25%),0.20);
+    border: 1px solid $color;
+    border-radius: 3px;
+    font-size: 12px;
+    .method {
+        background: $color;
+        padding: 4px 8px;
+        border-radius: 3px;
+        color: $color-white;
+        font-size: 12px;
+        font-weight: bold;
+        margin-right: 8px;
+    }
+    header {
+        display: flex;
+    }
+}
+
+body, html { overflow: hidden }
+
+body {
+    font-family: sans-serif;
+    font-size: 12px;
+
+    &.dark {
+        color: $color-grey;
+        background: $color-metal;
+        header { background: $color-metal }
+    }
+
+    &.light {
+        color: $color-metal;
+        background: #F6F6F6;
+        header {
+            background: #FDFDFD;
+            box-shadow: 0 0 2px rgba(0,0,0,0.2);
+        }
+    }
+
+    #available > header {
+        position: sticky;
+        top: 0;
+        padding: 8px;
+        h1 {
+            .version {
+                border-radius: 12px;
+                font-size: 9px;
+                color: $color-grey;
+                padding: 2px 8px;
+                background: $color-metal;
+                vertical-align: 40%;
+            }
+        }
+    }
+
+    article {
+        margin: 16px;
+    }
+
+    #app>section {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        overflow: auto;
+    }
+
+    .path {
+        .route {
+            margin: 8px 0;
+            padding: 8px;
+            &.method_post { @include method(post) }
+            &.method_get { @include method(get) }
+            &.method_put { @include method(put) }
+            &.method_delete { @include method(delete) }
+            .path {
+                word-break: break-word;
+            }
+            h1 {
+                display: flex;
+                align-items: flex-start;
+                margin: 0;
+                font-size: 14px;
+                font-weight: normal;
+            }
+            .editor {
+                &.hidden { display: none }
+            }
+        }
+    }
+}
+
+
