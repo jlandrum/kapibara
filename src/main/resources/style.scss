@@ -1,7 +1,7 @@
 $color-white: #FFFFFF;
 $color-black: #000000;
-$color-green: #30c92c;
-$color-blue: #2fb5e6;
+$color-green: #7ecb64;
+$color-blue: #73cde6;
 $color-orange: #e6954e;
 $color-red: #e64946;
 $color-silver: #e6e6e6;
@@ -16,13 +16,25 @@ $method-colors: (
         default: $color-silver
 );
 
+@mixin button($color, $foreground: $color-black) {
+    ._button {
+        background: lighten(desaturate($color,5%),30%);
+        color: $foreground;
+        border: 1px solid $color;
+        border-radius: 3px;
+        font-size: 14px;
+        padding: 4px 8px;
+        margin: 8px 0;
+    }
+}
 @mixin method($name: null) {
     $color: map_get($method-colors,if($name,$name,"default"));
-    background-color: lighten($color,35%);
+    background-color: lighten(desaturate($color,5%),30%);
     box-shadow: 0 0 4px opacify(lighten($color,25%),0.20);
     border: 1px solid $color;
     border-radius: 3px;
     font-size: 12px;
+    @include button($color);
     .method {
         background: $color;
         padding: 4px 8px;
@@ -39,13 +51,17 @@ $method-colors: (
         textarea {
             resize: vertical;
             min-height: 80px;
+            width: 100%;
         }
         table {
+            min-width: 100%;
             border-spacing: 0;
+            border: 1px solid lighten($color,10%);
+            border-radius: 3px;
             tr:nth-child(odd) { background: lighten($color, 30%) }
             tr:nth-child(even) { background: lighten($color, 32%) }
             th {
-                background: $color;
+                background: lighten($color,10%);
                 color: $color-white;
                 font-size: 12px;
                 padding: 8px;
@@ -58,8 +74,9 @@ $method-colors: (
         }
         h1 {
             border-radius: 4px;
-            background: $color;
+            background: lighten($color,10%);
             color: $color-white;
+            font-weight: 500;
             display: block;
             padding: 8px;
             margin-top: 8px;
@@ -86,8 +103,11 @@ $method-colors: (
     }
 }
 
-body, html { overflow: hidden }
+button {
+    @include button($color-grey);
+}
 
+body, html { overflow: hidden }
 body {
     font-family: sans-serif;
     font-size: 12px;
@@ -160,5 +180,6 @@ body {
         }
     }
 }
+
 
 

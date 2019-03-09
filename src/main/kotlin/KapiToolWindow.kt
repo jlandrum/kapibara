@@ -29,6 +29,8 @@ import javafx.embed.swing.JFXPanel
 import javafx.scene.Scene
 import javafx.scene.web.WebView
 import netscape.javascript.JSObject
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import okhttp3.Response
 import java.awt.GridLayout
 import java.io.InputStream
@@ -113,24 +115,45 @@ class KapiToolWindowFactory : ToolWindowFactory, TypedHandlerDelegate() {
             fun log(obj: Any) {
                 println(obj)
             }
-            public fun executeApiCall(host: String, path: String, method: String) : HttpResponse {
+            public fun executeApiCall(host: String, path: String, method: String, params: JSObject) : HttpResponse {
                 val url = URL(host+path)
+                val headerData = params.eval("Object.keys(this['header'])") as JSObject
+                val queryKeys = params.eval("Object.keys(this['query'])") as JSObject
+                val queryData = params.eval("this['query']") as JSObject
+                val pathData = params.eval("Object.keys(this['path'])") as JSObject
+                val bodyData = params.eval("this['body']") as String? ?: ""
+
                 return HttpResponse(when (method.toLowerCase()) {
                     "get" -> httpGet {
                         this.host = url.host
                         this.path = url.path
+                        this.param {
+                            queryKeys.toString().split(",").map { it to queryData.eval("this[$it]") }
+                        }
                     }
                     "put" -> httpPut {
                         this.host = url.host
                         this.path = url.path
+                        this.param {
+                            queryKeys.toString().split(",").map { it to queryData.eval("this[$it]") }
+                        }
+                        this.body { json(bodyData) }
                     }
                     "post" -> httpPost {
                         this.host = url.host
                         this.path = url.path
+                        this.param {
+                            queryKeys.toString().split(",").map { it to queryData.eval("this[$it]") }
+                        }
+                        this.body { json(bodyData) }
                     }
                     "delete" -> httpDelete {
                         this.host = url.host
                         this.path = url.path
+                        this.param {
+                            queryKeys.toString().split(",").map { it to queryData.eval("this[$it]") }
+                        }
+                        this.body { json(bodyData) }
                     }
                     "head" -> httpHead {
                         this.host = url.host

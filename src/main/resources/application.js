@@ -7,6 +7,7 @@ function init() {
             selectedHost: null,
             expandedAreas: {},
             responses: {},
+            values: {},
             log: ""
         },
         methods: {
@@ -23,9 +24,9 @@ function init() {
                 let element = event.target;
                 element.classList.toggle("active")
             },
-            executeApi(id, path, method) {
+            executeApi(id, path, method, values) {
                 if (typeof JB !== "undefined") {
-                    var data = JB.executeApiCall(vm.selectedUrl,path,method);
+                    var data = JB.executeApiCall(vm.selectedUrl,path,method, values);
                     Vue.set(vm.responses, id, {"code": data.code()||0, "message": data.message()||"", "body": data.body()||""});
                 } else {
                     Vue.set(vm.responses, id, {"code": 3, "message": "test", "body": "Hello"});
@@ -35,7 +36,21 @@ function init() {
     });
 
     window.updateContent = function(obj) {
-        vm.api = obj
+        vm.api = obj;
+        var valueMap = obj.paths;
+        var outputValueMap = {};
+        Object.keys(obj.paths).forEach(path=>{
+                outputValueMap[path] = {};
+                Object.keys(vm.httpMethods(obj.paths[path])).forEach(method => {
+                    outputValueMap[path][method] = {};
+                    outputValueMap[path][method]['body'] = "";
+                    outputValueMap[path][method]['header'] = {};
+                    outputValueMap[path][method]['query'] = {};
+                    outputValueMap[path][method]['path'] = {};
+                });
+            }
+        );
+        vm.values = outputValueMap
     }
 }
 

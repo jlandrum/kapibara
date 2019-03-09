@@ -1,3 +1,13 @@
+button ._button {
+  background: white;
+  color: #000000;
+  border: 1px solid #CCCCCC;
+  border-radius: 3px;
+  font-size: 14px;
+  padding: 4px 8px;
+  margin: 8px 0;
+}
+
 body, html {
   overflow: hidden;
 }
@@ -50,14 +60,23 @@ body .path .route {
   padding: 8px;
 }
 body .path .route.method_post {
-  background-color: #b9efb8;
-  box-shadow: 0 0 4px #90e68e;
-  border: 1px solid #30c92c;
+  background-color: #def0d8;
+  box-shadow: 0 0 4px #cdebc3;
+  border: 1px solid #7ecb64;
   border-radius: 3px;
   font-size: 12px;
 }
+body .path .route.method_post ._button {
+  background: #def0d8;
+  color: #000000;
+  border: 1px solid #7ecb64;
+  border-radius: 3px;
+  font-size: 14px;
+  padding: 4px 8px;
+  margin: 8px 0;
+}
 body .path .route.method_post .method {
-  background: #30c92c;
+  background: #7ecb64;
   padding: 4px 8px;
   border-radius: 3px;
   color: #FFFFFF;
@@ -71,18 +90,22 @@ body .path .route.method_post header {
 body .path .route.method_post .editor textarea {
   resize: vertical;
   min-height: 80px;
+  width: 100%;
 }
 body .path .route.method_post .editor table {
+  min-width: 100%;
   border-spacing: 0;
+  border: 1px solid #9ed88a;
+  border-radius: 3px;
 }
 body .path .route.method_post .editor table tr:nth-child(odd) {
-  background: #a5eba3;
+  background: #ddf1d7;
 }
 body .path .route.method_post .editor table tr:nth-child(even) {
-  background: #adedab;
+  background: #e4f4de;
 }
 body .path .route.method_post .editor table th {
-  background: #30c92c;
+  background: #9ed88a;
   color: #FFFFFF;
   font-size: 12px;
   padding: 8px;
@@ -94,8 +117,9 @@ body .path .route.method_post .editor table td {
 }
 body .path .route.method_post .editor h1 {
   border-radius: 4px;
-  background: #30c92c;
+  background: #9ed88a;
   color: #FFFFFF;
+  font-weight: 500;
   display: block;
   padding: 8px;
   margin-top: 8px;
@@ -103,7 +127,7 @@ body .path .route.method_post .editor h1 {
 body .path .route.method_post .editor .section {
   box-sizing: border-box;
   display: none;
-  border: 1px solid #30c92c;
+  border: 1px solid #7ecb64;
   margin-bottom: 8px;
   border-radius: 0 0 3px 3px;
   padding: 8px;
@@ -124,14 +148,23 @@ body .path .route.method_post .editor .parameters .parameter .schema textarea {
   width: 100%;
 }
 body .path .route.method_get {
-  background-color: #ceeef9;
-  box-shadow: 0 0 4px #a1ddf4;
-  border: 1px solid #2fb5e6;
+  background-color: #f5fbfd;
+  box-shadow: 0 0 4px #dff4f9;
+  border: 1px solid #73cde6;
   border-radius: 3px;
   font-size: 12px;
 }
+body .path .route.method_get ._button {
+  background: #f5fbfd;
+  color: #000000;
+  border: 1px solid #73cde6;
+  border-radius: 3px;
+  font-size: 14px;
+  padding: 4px 8px;
+  margin: 8px 0;
+}
 body .path .route.method_get .method {
-  background: #2fb5e6;
+  background: #73cde6;
   padding: 4px 8px;
   border-radius: 3px;
   color: #FFFFFF;
@@ -145,18 +178,22 @@ body .path .route.method_get header {
 body .path .route.method_get .editor textarea {
   resize: vertical;
   min-height: 80px;
+  width: 100%;
 }
 body .path .route.method_get .editor table {
+  min-width: 100%;
   border-spacing: 0;
+  border: 1px solid #9edcee;
+  border-radius: 3px;
 }
 body .path .route.method_get .editor table tr:nth-child(odd) {
-  background: #b8e6f6;
+  background: #f5fbfd;
 }
 body .path .route.method_get .editor table tr:nth-child(even) {
-  background: #c1e9f8;
+  background: #fdfeff;
 }
 body .path .route.method_get .editor table th {
-  background: #2fb5e6;
+  background: #9edcee;
   color: #FFFFFF;
   font-size: 12px;
   padding: 8px;
@@ -168,8 +205,9 @@ body .path .route.method_get .editor table td {
 }
 body .path .route.method_get .editor h1 {
   border-radius: 4px;
-  background: #2fb5e6;
+  background: #9edcee;
   color: #FFFFFF;
+  font-weight: 500;
   display: block;
   padding: 8px;
   margin-top: 8px;
@@ -177,7 +215,7 @@ body .path .route.method_get .editor h1 {
 body .path .route.method_get .editor .section {
   box-sizing: border-box;
   display: none;
-  border: 1px solid #2fb5e6;
+  border: 1px solid #73cde6;
   margin-bottom: 8px;
   border-radius: 0 0 3px 3px;
   padding: 8px;
@@ -198,11 +236,20 @@ body .path .route.method_get .editor .parameters .parameter .schema textarea {
   width: 100%;
 }
 body .path .route.method_put {
-  background-color: #fcf3ea;
+  background-color: #f8e5d5;
   box-shadow: 0 0 4px #f6d8be;
   border: 1px solid #e6954e;
   border-radius: 3px;
   font-size: 12px;
+}
+body .path .route.method_put ._button {
+  background: #f8e5d5;
+  color: #000000;
+  border: 1px solid #e6954e;
+  border-radius: 3px;
+  font-size: 14px;
+  padding: 4px 8px;
+  margin: 8px 0;
 }
 body .path .route.method_put .method {
   background: #e6954e;
@@ -219,9 +266,13 @@ body .path .route.method_put header {
 body .path .route.method_put .editor textarea {
   resize: vertical;
   min-height: 80px;
+  width: 100%;
 }
 body .path .route.method_put .editor table {
+  min-width: 100%;
   border-spacing: 0;
+  border: 1px solid #ecb07b;
+  border-radius: 3px;
 }
 body .path .route.method_put .editor table tr:nth-child(odd) {
   background: #f9e5d4;
@@ -230,7 +281,7 @@ body .path .route.method_put .editor table tr:nth-child(even) {
   background: #faebdd;
 }
 body .path .route.method_put .editor table th {
-  background: #e6954e;
+  background: #ecb07b;
   color: #FFFFFF;
   font-size: 12px;
   padding: 8px;
@@ -242,8 +293,9 @@ body .path .route.method_put .editor table td {
 }
 body .path .route.method_put .editor h1 {
   border-radius: 4px;
-  background: #e6954e;
+  background: #ecb07b;
   color: #FFFFFF;
+  font-weight: 500;
   display: block;
   padding: 8px;
   margin-top: 8px;
@@ -272,11 +324,20 @@ body .path .route.method_put .editor .parameters .parameter .schema textarea {
   width: 100%;
 }
 body .path .route.method_delete {
-  background-color: #fbe4e3;
+  background-color: #f7cfce;
   box-shadow: 0 0 4px #f5b8b6;
   border: 1px solid #e64946;
   border-radius: 3px;
   font-size: 12px;
+}
+body .path .route.method_delete ._button {
+  background: #f7cfce;
+  color: #000000;
+  border: 1px solid #e64946;
+  border-radius: 3px;
+  font-size: 14px;
+  padding: 4px 8px;
+  margin: 8px 0;
 }
 body .path .route.method_delete .method {
   background: #e64946;
@@ -293,9 +354,13 @@ body .path .route.method_delete header {
 body .path .route.method_delete .editor textarea {
   resize: vertical;
   min-height: 80px;
+  width: 100%;
 }
 body .path .route.method_delete .editor table {
+  min-width: 100%;
   border-spacing: 0;
+  border: 1px solid #ec7573;
+  border-radius: 3px;
 }
 body .path .route.method_delete .editor table tr:nth-child(odd) {
   background: #f8cecd;
@@ -304,7 +369,7 @@ body .path .route.method_delete .editor table tr:nth-child(even) {
   background: #f9d6d6;
 }
 body .path .route.method_delete .editor table th {
-  background: #e64946;
+  background: #ec7573;
   color: #FFFFFF;
   font-size: 12px;
   padding: 8px;
@@ -316,8 +381,9 @@ body .path .route.method_delete .editor table td {
 }
 body .path .route.method_delete .editor h1 {
   border-radius: 4px;
-  background: #e64946;
+  background: #ec7573;
   color: #FFFFFF;
+  font-weight: 500;
   display: block;
   padding: 8px;
   margin-top: 8px;

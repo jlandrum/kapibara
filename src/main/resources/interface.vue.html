@@ -37,42 +37,54 @@
                             <h1 @click.self="toggleView(`${methodKey}_${pathKey}`)"><span class="method">{{methodKey.toUpperCase() }}</span><span class="path">{{pathKey}}</span></h1>
                             <div class="editor" :class="[expandedAreas[`${methodKey}_${pathKey}`]?'':'hidden']">
                                 <p class="summary">{{method.summary}}</p>
-                                <h1 class="active" @click.self="toggleActivated($event)">Execute</h1>
+                                <h1 @click.self="toggleActivated($event)" v-if="method.parameters">Parameters</h1>
                                 <div class="section">
-                                    <button @click="executeApi(`${methodKey}_${pathKey}`,pathKey,methodKey)">Try It</button>
-                                    <table>
+                                    <table class="parameters">
                                         <thead>
-                                            <tr>
-                                                <th>Code</th>
-                                                <th>Url</th>
-                                                <th>Body</th>
-                                            </tr>
-                                        </thead>
-                                        <tr v-if="responses[`${methodKey}_${pathKey}`]">
-                                            <td>{{responses[`${methodKey}_${pathKey}`].code}}</td>
-                                            <td>{{responses[`${methodKey}_${pathKey}`].message}}</td>
-                                            <td>{{responses[`${methodKey}_${pathKey}`].body}}</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <h1 @click.self="toggleActivated($event)">Parameters</h1>
-                                <table class="parameters section">
-                                    <thead>
                                         <tr>
                                             <th>Name</th>
                                             <th>Description</th>
                                             <th>Value</th>
                                         </tr>
-                                    </thead>
-                                    <tr class="parameter" v-for="parameter in method.parameters">
-                                        <td class="name">({{parameter.in}}) {{parameter.name}}<span class="required" v-if="parameter.required===true">*</span></td>
-                                        <td class="description">{{parameter.description}}</td>
-                                        <td class="schema">
-                                            <input type="text" v-if="parameter.in !== 'body'" :value="parameter.example"/>
-                                            <textarea v-if="parameter.in === 'body'" disabled>{{parameter.schema}}</textarea>
-                                        </td>
-                                    </tr>
-                                </table>
+                                        </thead>
+                                        <tr class="parameter" v-for="parameter in method.parameters">
+                                            <td class="name">({{parameter.in}}) {{parameter.name}}<span class="required" v-if="parameter.required===true">*</span></td>
+                                            <td class="description">{{parameter.description}}</td>
+                                            <td class="schema">
+                                                <input type="text" v-model="values[pathKey][methodKey][parameter.in][parameter.name]" v-if="parameter.in !== 'body'"/>
+                                                <textarea v-if="parameter.in === 'body'" v-model="values[pathKey][methodKey][parameter.in][parameter.name]" disabled>{{parameter.schema}}</textarea>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <h1 v-if="method.requestBody" @click.self="toggleActivated($event)">Body</h1>
+                                <div class="section">
+                                    <label>Default
+                                        <textarea disabled>{{method.requestBody}}</textarea>
+                                    </label>
+                                    <label>
+                                        Try it
+                                        <textarea v-model="values[`${pathKey}_${methodKey}_body`]">{{method.requestBody}}</textarea>
+                                    </label>
+                                </div>
+                                <h1 @click.self="toggleActivated($event)">Execute</h1>
+                                <div class="section">
+                                    <button @click="executeApi(`${methodKey}_${pathKey}`,pathKey,methodKey,values[pathKey][methodKey])">Try It</button>
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Url</th>
+                                            <th>Body</th>
+                                        </tr>
+                                        </thead>
+                                        <tr v-if="responses[`${methodKey}_${pathKey}`]">
+                                            <td>{{responses[`${methodKey}_${pathKey}`].code}}</td>
+                                            <td>{{responses[`${methodKey}_${pathKey}`].message}}</td>
+                                            <td><textarea>{{responses[`${methodKey}_${pathKey}`].body}}</textarea></td>
+                                        </tr>
+                                    </table>
+                                </div>
                                 <h1  @click.self="toggleActivated($event)">Responses</h1>
                                 <div class="responses section">
                                     <div class="response" v-for="(response, code) in method.responses">
